@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anniversary Card</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+             /* Tambahkan baris di bawah ini untuk menghilangkan efek biru saat di-tap */
+    -webkit-tap-highlight-color: transparent; 
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #2b102b, #4a1942);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 90%;
+            max-width: 450px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Layar 1: Kado --- */
+        .gift-btn {
+            font-size: 90px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            animation: bounce 2s infinite;
+            margin-bottom: 15px;
+            transition: transform 0.2s;
+        }
+
+        .gift-btn:active {
+            transform: scale(0.9);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
+        }
+
+        .instruction {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* --- Layar 2 & 3: Glassmorphism Card --- */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px 25px;
+            width: 100%;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:active {
+            transform: scale(0.98);
+        }
+
+        .avatar {
+    width: 90px;
+    height: 90px;
+    background: #ffffff;
+    border-radius: 20px;
+    margin: 0 auto 20px;
+    display: block; /* Diubah dari flex menjadi block */
+    object-fit: cover; /* Ini wajib ditambahkan agar gambar tidak gepeng */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+
+        
+
+        .title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .message-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .message-text {
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.5;
+        }
+
+        /* Efek kursor berkedip saat mengetik */
+        .message-text::after {
+            content: '|';
+            animation: blink 0.8s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .hint {
+            font-size: 0.8rem;
+            color: #d1d1d1;
+            font-weight: 300;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* --- Tampilan Akhir --- */
+        .final-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #ffb6c1;
+        }
+
+        .final-wish {
+            font-size: 0.95rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .date {
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            opacity: 0.8;
+        }
+
+        .love {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+        }
+
+        .reply-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+        }
+
+        .reply-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Layar 1: Kado Awal -->
+    <div id="screen-1" class="screen active">
+        <button class="gift-btn" onclick="showScreen(2)">🎁</button>
+        <p class="instruction">Tekan Kadonya dong ayang!😋</p>
+    </div>
+
+    <!-- Layar 2: Pesan Interaktif -->
+    <div id="screen-2" class="screen">
+        <div class="glass-card" onclick="nextMessage()">
+            <img src="aniv.jpg" class="avatar" alt="Foto">
+            <h2 class="title">Hai kamukuu..!</h2>
+            <div class="message-box">
+                <!-- Dikosongkan agar JavaScript yang mengetik teksnya -->
+                <p id="message-text" class="message-text"></p>
+            </div>
+            <p class="hint">Click to Continue ▼</p>
+        </div>
+    </div>
+
+    <!-- Layar 3: Ucapan Akhir -->
+    <div id="screen-3" class="screen">
+        <div class="glass-card" style="cursor: default;">
+            <div class="avatar">💝</div>
+            <h2 class="final-title">Happy Anniversary!</h2>
+            <p class="final-wish">Harapanku di momen istimewa ini adalah semoga kita bisa tetap bersama dan selalu memiliki tujuan yang sama, bareng bareng terus ya ayangggg, wopyuu &lt;3</p>
+            <p class="date">- 09 Oktober 2026 -</p>
+            <h2 class="love">I Love You</h2>
+            <a href="https://wa.me/6283832650680?text=Halo%20sayang,%20aku%20udah%20baca%20ucapannya!%20Makasih%20ya%20%E2%9D%A4%EF%B8%8F" target="_blank" style="text-decoration: none;">
+    <button class="reply-btn">Reply 💌</button>
+</a>
+
+        </div>
+    </div>
+
+    <script>
+        const messages = [
+            "Aku cuma mau mengatakan...",
+            "Terimakasih masih dan tetap bersamaku 😊",
+            "Terimakasih juga sudah menerima aku walaupun aku tau banyak kurangnya aku..",
+            "Apapun yang terjadi",
+            "I still love you 💖",
+            "Belom selesai ayanggg, tekan lagi!"
+        ];
+        
+        let currentMessageIndex = 0;
+        const messageTextElement = document.getElementById("message-text");
+        
+        // Variabel untuk mengontrol efek ngetik
+        let i = 0;
+        let isTyping = false;
+        let typingTimer;
+
+        // Fungsi efek mengetik (Typewriter)
+        function typeWriter(text) {
+            if (i < text.length) {
+                messageTextElement.innerHTML += text.charAt(i);
+                i++;
+                // Kecepatan ngetik (50 milidetik per huruf). Bisa diubah jika kurang cepat/lambat.
+                typingTimer = setTimeout(() => typeWriter(text), 50); 
+            } else {
+                isTyping = false; // Status selesai ngetik
+            }
+        }
+
+        // Fungsi untuk pindah layar
+        function showScreen(screenNumber) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById('screen-' + screenNumber).classList.add('active');
+
+            // Mulai ngetik kalimat pertama otomatis saat layar 2 terbuka
+            if (screenNumber === 2) {
+                messageTextElement.innerHTML = ""; // Pastikan kosong
+                currentMessageIndex = 0;
+                i = 0;
+                isTyping = true;
+                typeWriter(messages[currentMessageIndex]);
+            }
+        }
+
+        // Fungsi untuk lanjut ke pesan berikutnya
+        function nextMessage() {
+            // Jika sistem masih sedang mengetik kalimat, klik diabaikan agar animasi tidak tumpang tindih
+            if (isTyping) return; 
+
+            currentMessageIndex++;
+            if (currentMessageIndex < messages.length) {
+                messageTextElement.innerHTML = ""; // Bersihkan kalimat sebelumnya
+                i = 0;
+                isTyping = true;
+                typeWriter(messages[currentMessageIndex]); // Mulai ketik kalimat baru
+            } else {
+                showScreen(3);
+            }
+        }
+    </script>
+</body>
+</html>
